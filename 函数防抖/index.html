@@ -18,7 +18,7 @@
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/2020/02/09/前端/函数防抖/">
+    <link rel="canonical" href="http://yoursite.com/函数防抖/">
 
     <!-- Bootstrap Core CSS -->
 
@@ -271,9 +271,10 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">        <span class="keyword">var</span> clickCount = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">var</span> cursor = <span class="built_in">document</span>.getElementById(<span class="string">"button"</span>);</span><br><span class="line">        <span class="comment">/* returnfn存储Debounce的返回值。returnfn是Debounce的子函数，且returnfn一直存在于内存</span></span><br><span class="line"><span class="comment">           中，因此即使父函数Debounce已经执行完毕，依旧可以通过returnfn访问到Debounce中的变量 */</span></span><br><span class="line">        <span class="keyword">var</span> returnfn = Debounce(Clog,<span class="number">1000</span>);</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Debounce</span>(<span class="params">fn,waittime</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> timer = <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">var</span> that = <span class="keyword">this</span>;</span><br><span class="line">                <span class="comment">// 将要传递给fn的参数首先作为returnfn的参数，再由returnfn传递给fn</span></span><br><span class="line">                <span class="keyword">var</span> args = <span class="built_in">arguments</span>;   </span><br><span class="line">                <span class="keyword">if</span>(timer)&#123;clearTimeout(timer)&#125;;</span><br><span class="line">                timer = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                    fn.apply(that,args);</span><br><span class="line">                &#125;, waittime);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* Clog即fn接收returnfn的参数作为自己的参数 */</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Clog</span>(<span class="params">str1,str2</span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"delayed function! "</span>+<span class="built_in">String</span>(str1)+<span class="built_in">String</span>(str2)+<span class="string">"\n"</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">OnMouseDown</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            cursor.style.cursor = <span class="string">"wait"</span>;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"Click Event Count: "</span>+<span class="built_in">String</span>(clickCount++));</span><br><span class="line">            <span class="comment">/* 当点击鼠标，执行Debounce函数返回的returnfn。在returnfn中，若timer为非空，则说</span></span><br><span class="line"><span class="comment">               明在规定时间内用户进行了重复的点击，因此取消上一次的定时器并重新设置一个定时器。</span></span><br><span class="line"><span class="comment">               returnfn的参数为传递给fn的参数！</span></span><br><span class="line"><span class="comment">            */</span></span><br><span class="line">            returnfn(<span class="string">"fn's first argument！！！"</span>,<span class="string">"fn's second argument!!!\n"</span>);     </span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">OnMouseUp</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            cursor.style.cursor = <span class="string">"default"</span>;</span><br><span class="line">        &#125;;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>​        上述代码运行结果图：</p>
-<p><img src="/source/imgs/%E5%87%BD%E6%95%B0%E9%98%B2%E6%8A%96/debounce.png" alt=""></p>
+<p><img src="/imgs/%E5%87%BD%E6%95%B0%E9%98%B2%E6%8A%96/debounce.png" alt="debounce"></p>
 <p>​        第0-5次点击为快速连续点击，因此0-4次点击都设置并取消了定时器，第5次点击后停留了一段时间，因此第5次点击的内部函数得以执行。第6次点击后，停止点击，因此第六次点击在间隔1000ms后也得以执行。</p>
 <p>首先，函数中使用到了全局变量<code>this.timer</code>，但我们知道JS的垃圾回收系统对于全局变量的回收和内存空间释放的判断是比较困难的。因此我们希望可以避免使用全局变量，而是通过函数内的局部变量完成同样的功能。代码如下:</p>
+<p><img src="/imgs/%E5%87%BD%E6%95%B0%E9%98%B2%E6%8A%96/a.jpg" alt="a"></p>
 
                 
 
@@ -281,10 +282,6 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                    
-                        <li class="next">
-                            <a href="/2020/02/09/First-Post/" data-toggle="tooltip" data-placement="top" title="First Post？？？？？">Next post &rarr;</a>
-                        </li>
                     
                 </ul>
 
@@ -508,7 +505,7 @@
 <script>
     // only load tagcloud.js in tag.html
     if($('#tag_cloud').length !== 0){
-        async("http://yoursite.com/2020/02/09/%E5%89%8D%E7%AB%AF/%E5%87%BD%E6%95%B0%E9%98%B2%E6%8A%96/index.html/js/jquery.tagcloud.js",function(){
+        async("http://yoursite.com/%E5%87%BD%E6%95%B0%E9%98%B2%E6%8A%96/index.html/js/jquery.tagcloud.js",function(){
             $.fn.tagcloud.defaults = {
                 //size: {start: 1, end: 1, unit: 'em'},
                 color: {start: '#bbbbee', end: '#0085a1'},
