@@ -14,7 +14,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          【前端】函数防抖-案例版 - null
+          【前端】函数防抖-延迟执行和立即执行 - null
         
     </title>
 
@@ -125,7 +125,7 @@
                               <a class="tag" href="/tags/#前端" title="前端">前端</a>
                             
                         </div>
-                        <h1>【前端】函数防抖-案例版</h1>
+                        <h1>【前端】函数防抖-延迟执行和立即执行</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 西瓜 on
@@ -273,6 +273,13 @@
 <p>​        上述代码运行结果图：</p>
 <p><img src="/imgs/%E5%87%BD%E6%95%B0%E9%98%B2%E6%8A%96-%E6%A1%88%E4%BE%8B%E7%89%88/debounce.png" alt="debounce"></p>
 <p>​        第0-5次点击为快速连续点击，因此0-4次点击都设置并取消了定时器，第5次点击后停留了一段时间，因此第5次点击的内部函数得以执行。第6次点击后，停止点击，因此第六次点击在间隔1000ms后也得以执行。</p>
+<h3 id="5、立即执行的防抖函数-连续点击时，第一次执行，后续不执行"><a href="#5、立即执行的防抖函数-连续点击时，第一次执行，后续不执行" class="headerlink" title="5、立即执行的防抖函数(连续点击时，第一次执行，后续不执行)"></a>5、立即执行的防抖函数(连续点击时，第一次执行，后续不执行)</h3><p>​        前面几步，我们已经将函数的防抖写的尽量美观了，但仍然存在一些特殊的需求需要我们对防抖函数进一步修改。比如，在某些场景下，我们更希望在用户连续频繁触发操作时，程序只响应第一次的触发，而不响应后续的触发。比较典型的场景是游戏中，限制人物连跳的场景，我们更希望当用户频繁触发跳跃操作时，只有第一次能够成功。即限制人物只能跳跃一次。</p>
+<p>​        这种立即执行的防抖函数的思路也不难，下面是其主要代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Debounce</span>(<span class="params">fn,waittime</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> timer = <span class="literal">null</span>;</span><br><span class="line">            <span class="comment">/* flag是控制函数立即执行的标志。当flag为true函数立即执行，执行完毕设置flag为false；</span></span><br><span class="line"><span class="comment">            若函数已经执行过，此后再连续频繁点击，只会不断地设置并取消延时函数，导致无法将flag复位为true。</span></span><br><span class="line"><span class="comment">            只有经过足够长时间，延时函数成功执行后，才能将flag成功设为true，此时再下一次点击将会立刻触发事件。*/</span></span><br><span class="line">            <span class="keyword">var</span> flag = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">var</span> that = <span class="keyword">this</span>;</span><br><span class="line">                <span class="comment">// 将要传递给fn的参数首先作为returnfn的参数，再由returnfn传递给fn</span></span><br><span class="line">                <span class="keyword">var</span> args = <span class="built_in">arguments</span>;   </span><br><span class="line">                <span class="keyword">if</span>(timer)&#123;clearTimeout(timer)&#125;;</span><br><span class="line">                <span class="keyword">if</span>(flag)&#123;</span><br><span class="line">                    fn.apply(that,args);</span><br><span class="line">                    flag = <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                timer = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                    flag = <span class="literal">true</span>;</span><br><span class="line">                &#125;, waittime);</span><br><span class="line">            &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>​        函数执行的效果如下图所示：</p>
+<p><img src="/imgs/%E5%87%BD%E6%95%B0%E9%98%B2%E6%8A%96-%E6%A1%88%E4%BE%8B%E7%89%88/image-20200211203528893.png" alt="image-20200211203528893"></p>
+<p>​        第0-4次点击为连续触发，结果只有第0次成功地执行了函数。第5-9次点击为连续点击，只有第5次执行了函数。符合我们的预期。</p>
 
                 
 
